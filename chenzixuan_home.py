@@ -3,7 +3,7 @@ import streamlit as st
 from PIL import Image
 import time
 
-page = st.sidebar.radio('我的首页', ['我的兴趣推荐', '我的图片处理工具', '我的智能词典', '我的留言区','更多应用','我知道点'])
+page = st.sidebar.radio('我的首页', ['我的兴趣推荐', '我的图片处理工具', '我的智能词典', '我的留言区','更多应用','我知道点','我的地图'])
 
 
 def page_1():
@@ -187,7 +187,13 @@ def page_6():
         else:
             st.write('再想想')
 
-            
+def page_7():
+    data = {
+        'latitude': [37.7749, 34.0522, 40.7128],
+        'longitude': [-122.4194, -118.2437, -74.0060],
+        'name': ['San Francisco', 'Los Angeles', 'New York']
+    }
+    st.map(data, zoom=4, use_container_width=True)
 def img_change(img, rc, gc, bc):
     '''图片处理'''
     width, height = img.size
@@ -214,4 +220,5 @@ elif page == '更多应用':
     page_5()
 elif page == '我知道点':
     page_6()
-
+elif page == '我的地图':
+    page_7()
