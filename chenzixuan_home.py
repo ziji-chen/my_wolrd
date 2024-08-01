@@ -12,18 +12,22 @@ def page_1():
         mymp3 = f.read()
     st.audio(mymp3, format='audio/mp3', start_time=0)
     st.image('slogan.png')
-    tab1,tab2,tab3,tab4= st.tabs(['推荐','游戏推荐','书籍推荐','习题集推荐'])
+    tab1,tab2,tab3,tab4= st.tabs(['电影推荐','游戏推荐','书籍推荐','习题集推荐'])
     with tab1:
-        st.write('策划的电影推荐')
+        st.write('策划的电影推荐：头号玩家')
+        st.image('电影.png')
         st.write('-----------------------------')
     with tab2:
-        st.write('策划的游戏推荐')
+        st.write('策划的游戏推荐：暗区突围')
+        st.image('游戏.png')
         st.write('-----------------------------')
     with tab3:
-        st.write('策划的书籍推荐')
+        st.write('策划的书籍推荐:三体')
+        st.image('书籍.png')
         st.write('-----------------------------')
     with tab4:
-        st.write('策划的习题集推荐')
+        st.write('策划的习题集推荐：万唯中考')
+        st.image('习题.png')
         st.write('-----------------------------')
 
 
@@ -37,18 +41,24 @@ def page_2():
         file_type = uploaded_file.type
         file_size = uploaded_file.size
         img = Image.open(uploaded_file)
-        # st.image(img)
-        # st.image(img_change(img, 2, 0, 1))
-        tab1,tab2,tab3,tab4= st.tabs(['原色','改色1','改色2','改色3'])
-        with tab1:
-            st.image(img)
-        with tab2:
-            st.image(img_change(img,0,2,1))
-        with tab3:
-            st.image(img_change(img,1,2,0))
-        with tab4:
-            st.image(img_change(img,1,0,2))
-
+        # tab1,tab2,tab3,tab4= st.tabs(['原色','改色1','改色2','改色3'])
+        # with tab1:
+        #     st.image(img)
+        # with tab2:
+        #     st.image(img_change(img,0,2,1))
+        # with tab3:
+        #     st.image(img_change(img,1,2,0))
+        # with tab4:
+        #     st.image(img_change(img,1,0,2))
+        st.image(img)
+        r = st.slider('R：', 1, 256,1)
+        g = st.slider('G：', 1, 256,1)
+        b = st.slider('B：', 1, 256,1)
+        if r == 256 and g == 256 and b == 256:
+            st.image('素材.png')
+        else:
+            st.image(img_change(img,r,g,b))
+        
 
 
 def page_3():
@@ -78,7 +88,7 @@ def page_3():
     if word in words_dict:
         roading = st.progress(0, '开始加载')#显示计时器
         for i in range(1, 101, 1):
-            time.sleep(0.02)
+            time.sleep(0.1)
             roading.progress(i, '正在加载'+str(i)+'%')
             roading.progress(100, '加载完毕，请等待结果展示')
         st.write(words_dict[word][1])
@@ -180,20 +190,22 @@ def page_6():
     cb2 = st.checkbox('B.图片处理工具')
     cb3 = st.checkbox('C.智能词典工具')
     cb4 = st.checkbox('D.pygame小游戏')
-    b1 = st.button('确认答案')
+    b1 = st.button('第1题答案')
     if b1:
         if cb1 == False and cb2 == True and cb3 == True and cb4 == False:
             st.write('回答正确！')
         else:
             st.write('再想想')
 
+
 def page_7():
-    data = {
-        'latitude': [37.7749, 34.0522, 40.7128],
-        'longitude': [-122.4194, -118.2437, -74.0060],
-        'name': ['San Francisco', 'Los Angeles', 'New York']
-    }
+    '''我的地图'''
+    data = {'latitude': [37.7749, 34.0522, 40.7128], 
+            'longitude': [(-122.4194), (-118.2437), (-74.006)],
+            'name': ['San Francisco', 'Los Angeles', 'New York']}
     st.map(data, zoom=4, use_container_width=True)
+
+            
 def img_change(img, rc, gc, bc):
     '''图片处理'''
     width, height = img.size
@@ -201,10 +213,10 @@ def img_change(img, rc, gc, bc):
     for x in range(width):
         for y in range(height):
             # 获取RGB值
-            r = img_array[x, y][rc]
-            g = img_array[x, y][gc]
-            b = img_array[x, y][bc]
-            img_array[x, y] = (r, g, b)
+            # r = img_array[x, y][rc]
+            # g = img_array[x, y][gc]
+            # b = img_array[x, y][bc]
+            img_array[x, y] = (rc, gc, bc)
     return img
 
 
